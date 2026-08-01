@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Happy My Girlfriend Liaa 💐</title>
+    <style>
+        * {margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',cursive,sans-serif;}
+        body {
+            min-height:100vh;
+            background: url("foto-liaa.jpg") no-repeat center center/cover fixed;
+            position:relative;overflow-x:hidden;color:#fff;text-align:center;padding:20px;
+        }
+        .lapisan {position:absolute;inset:0;background:rgba(0,0,0,.58);z-index:0;}
+        /* Efek partikel jatuh */
+        .partikel {
+            position:absolute;top:-20px;z-index:2;pointer-events:none;
+            animation:jatuh linear forwards;
+        }
+        @keyframes jatuh {
+            to {transform:translateY(105vh) rotate(360deg);opacity:.35;}
+        }
+        /* Animasi hati bergerak */
+        @keyframes detakHati {
+            0%,100%{transform:scale(1);}
+            50%{transform:scale(1.2);}
+        }
+        .detak {animation:detakHati .8s infinite;display:inline-block;}
+        /* Layar awal & tombol umum */
+        .layar-awal {
+            position:fixed;inset:0;background:rgba(15,23,42,.92);z-index:100;
+            display:flex;flex-direction:column;align-items:center;justify-content:center;gap:25px;
+            transition:opacity 1s ease,visibility 1s;
+        }
+        .layar-awal.sembunyi {opacity:0;visibility:hidden;}
+        .tombol {
+            background:linear-gradient(45deg,#f472b6,#e63980);color:#fff;border:none;
+            padding:15px 35px;font-size:1.1rem;border-radius:50px;cursor:pointer;
+            box-shadow:0 0 20px rgba(244,114,182,.5);transition:transform .2s;
+        }
+        .tombol:active{transform:scale(.95);}
+        .tombol-refresh{background:#e74c3c;margin-top:15px;}
+        .tombol-selesai{background:#27ae60;margin-top:20px;}
+
+        /* Konten & Kartu */
+        .konten {
+            max-width:420px;margin:0 auto;position:relative;z-index:10;
+            opacity:0;transform:translateY(20px);transition:all 1.2s ease;padding:30px 20px;
+            display:none;
+        }
+        .konten.tampil {opacity:1;transform:translateY(0);display:block;}
+        .foto-profil {
+            width:180px;height:180px;border-radius:50%;object-fit:cover;
+            border:4px solid #f9a8d4;box-shadow:0 0 25px rgba(248,187,208,.5);margin-bottom:20px;
+        }
+        .card {
+            background:rgba(255,255,255,.12);backdrop-filter:blur(10px);
+            padding:30px;border-radius:20px;border:1px solid rgba(255,255,255,.2);line-height:1.8;
+        }
+        h1 {color:#fef08a;font-size:1.7rem;margin-bottom:15px;}
+        .pesan {
+            color:#fefefe;font-size:1.1rem;margin:10px 0;
+            opacity:0;transform:translateY(12px);transition:all .7s ease;
+        }
+        .pesan.muncul {opacity:1;transform:translateY(0);}
+        .bunga {font-size:2.5rem;margin:15px 0;}
+        .tanya {color:#fbcfe8;font-size:1.2rem;margin:20px 0;line-height:1.6;}
+        .jawab {padding:12px;font-size:1rem;border-radius:8px;border:none;width:85%;max-width:290px;margin:10px 0;}
+        .teks-hasil {font-size:1.15rem;margin:15px 0;line-height:1.7;}
+    </style>
+</head>
+<body>
+    <div class="lapisan"></div>
+
+    <script>
+        // Efek bintang & hati jatuh
+        function buatPartikel(){
+            const jenis = ['✨','💖','⭐','💕','💫'];
+            const el = document.createElement('div');
+            el.className='partikel';
+            el.innerText = jenis[Math.floor(Math.random()*jenis.length)];
+            el.style.left = Math.random()*100+'%';
+            el.style.fontSize = (Math.random()*18+12)+'px';
+            el.style.animationDuration = (Math.random()*4+3)+'s';
+            document.body.appendChild(el);
+            setTimeout(()=>el.remove(),7000);
+        }
+        setInterval(buatPartikel,350);
+    </script>
+
+    <!-- Layar Awal -->
+    <div class="layar-awal" id="layarAwal">
+        <p style="font-size:1.3rem;color:#fbcfe8;">Ada pesan istimewa untuk Liaa 💌</p>
+        <button class="tombol" onclick="bukaAwal()">Tekan untuk Buka Pesan</button>
+        <audio id="musik" loop preload="auto">
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <p style="font-size:.85rem;color:#cbd5e1;">Musik akan berbunyi saat dibuka</p>
+    </div>
+
+    <!-- Bagian Soal Awal -->
+    <div class="konten" id="bagianTanya">
+        <div class="card">
+            <div class="tanya" id="teksTanya"></div>
+            <input type="text" id="jawaban" class="jawab" placeholder="Ketik jawabanmu...">
+            <br>
+            <button class="tombol" style="font-size:1rem;padding:10px 22px;" onclick="cekJawabanAwal()">Kirim Jawaban</button>
+        </div>
+    </div>
+
+    <!-- Pesan Utama + Tombol Lanjutan -->
+    <div class="konten" id="bagianPesan">
+        <img src="foto-liaa.jpg" alt="Liaa" class="foto-profil">
+        <div class="card">
+            <div class="bunga">💐</div>
+            <h1>Happy My Girlfriend Liaa 💐</h1>
+            <div class="pesan">Hai cintaku sayangku ❤️</div>
+            <div class="pesan">Semangat terus ya setiap hari ✊✨</div>
+            <div class="pesan">Jangan lupa istirahat dan makan yang teratur ya</div>
+            <div class="pesan">Senyummu adalah hal paling indah buatku</div>
+            <div class="pesan">Aku akan selalu ada mendampingimu selamanya</div>
+            <div class="pesan">Kamu orang paling berharga di hidupku Liaa 💖</div>
+            <div class="pesan">Makasi ya sudah mau tebak-tebakan sama aku dan menjawab soal-soal yang aku berikan 😊</div>
+            <div style="margin-top:25px;">
+                <button class="tombol" onclick="lanjutTanya()">pencet yang ini dong 💝</button>
+            </div>
+            <div class="bunga">💐</div>
+        </div>
+    </div>
+
+    <!-- Bagian Pertanyaan Suka/Tidak -->
+    <div class="konten" id="bagianSuka">
+        <div class="card">
+            <div class="tanya">hay Liaa kamu suka ngga kalo aku kirim ini?</div>
+            <input type="text" id="jawabanSuka" class="jawab" placeholder="Jawab di sini...">
+            <br>
+            <button class="tombol" style="font-size:1rem;padding:10px 22px;" onclick="cekJawabanSuka()">Kirim Jawaban</button>
+            <div id="hasilSuka" style="margin-top:20px;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi tutup halaman saat tombol selesai ditekan
+        function tutupSelesai() {
+            window.open('', '_self');
+            window.close();
+        }
+
+        // Daftar soal awal
+        const daftarSoal = [
+            {tanya:"1. Siapa nama just friend mu liaa??",jawaban:["fahri","fahrii"]},
+            {tanya:"2. Apa warna kesukaan Fahri?",jawaban:["hitam"]},
+            {tanya:"3. Apa game kesukaan Fahri?",jawaban:["free fire","minecraft","freefire","minecraft"]}
+        ];
+        let nomorSoal = 0;
+
+        function bukaAwal(){
+            document.getElementById('layarAwal').classList.add('sembunyi');
+            const musik=document.getElementById('musik');musik.volume=.35;musik.play().catch(()=>{});
+            document.getElementById('bagianTanya').classList.add('tampil');
+            tampilSoal();
+        }
+
+        function tampilSoal(){
+            if(nomorSoal >= daftarSoal.length){
+                document.getElementById('bagianTanya').classList.remove('tampil');
+                const pesan=document.getElementById('bagianPesan');
+                pesan.classList.add('tampil');
+                const daftarPesan=document.querySelectorAll('.pesan');
+                daftarPesan.forEach((p,i)=>setTimeout(()=>p.classList.add('muncul'),600*(i+1)));
+                return;
+            }
+            document.getElementById('teksTanya').innerText = daftarSoal[nomorSoal].tanya;
+            document.getElementById('jawaban').value = "";
+        }
+
+        function cekJawabanAwal(){
+            const input = document.getElementById('jawaban').value.trim().toLowerCase();
+            if(daftarSoal[nomorSoal].jawaban.includes(input)){
+                nomorSoal++;
+                tampilSoal();
+            }else{
+                alert("e ehh salahh wkwk");
+            }
+        }
+
+        // Masuk ke pertanyaan suka/ngga
+        function lanjutTanya(){
+            document.getElementById('bagianPesan').classList.remove('tampil');
+            document.getElementById('bagianSuka').classList.add('tampil');
+            document.getElementById('jawabanSuka').value="";
+            document.getElementById('hasilSuka').innerHTML="";
+        }
+
+        function cekJawabanSuka(){
+            const input = document.getElementById('jawabanSuka').value.trim().toLowerCase();
+            const wadah = document.getElementById('hasilSuka');
+            if(["engga","tidak","ga"].includes(input)){
+                wadah.innerHTML = `
+                    <div class="teks-hasil">
+                        yaudah deh kalo ga suka, besok lagi aku ga mau buat lagi<br>
+                        💔 🥺
+                    </div>
+                    <button class="tombol tombol-refresh" onclick="lanjutTanya()">🔄 Refresh Coba Lagi</button>
+                    <p style="margin-top:15px;color:#fbcfe8;">gimana? pasti mau jawab iyaa/suka?</p>
+                `;
+            }else if(["iyaa","suka","iya","y","iyya"].includes(input)){
+                wadah.innerHTML = `
+                    <div class="teks-hasil">
+                        okee makasii yaa Liaa 💐<br>
+                        <span class="detak">❤️ ❤️ ❤️</span><br>
+                        <button class="tombol tombol-selesai" onclick="tutupSelesai()">✅ Selesai</button>
+                    </div>
+                `;
+            }else{
+                wadah.innerHTML = `<p style="color:#ffb0b0;">Jawab dengan iyaa/suka atau engga/tidak ya sayang 😊</p>`;
+            }
+        }
+    </script>
+</body>
+  </html>
+
